@@ -283,7 +283,7 @@ MIT License - 详见 [LICENSE](LICENSE) 文件
 
 ## 🤝 贡献
 
-欢迎提交 Issue 和 Pull Request！
+欢迎提交Pull Request！
 
 ## 📞 支持
 
