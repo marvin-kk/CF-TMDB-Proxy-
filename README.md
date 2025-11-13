@@ -48,7 +48,14 @@ wrangler deploy
 
 ### 方法3: 一键部署
 
+**注意**: 使用一键部署前，请确保你的 GitHub 仓库包含以下文件：
+- `worker.js` - 主要代码文件
+- `wrangler.toml` - Wrangler 配置文件
+- `package.json` - 项目配置文件
+
 [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/qqcomeup/cf-tmdb)
+
+如果遇到 "找不到 wrangler.toml 文件" 的错误，请先将本项目的所有文件上传到你的 GitHub 仓库。
 
 ## 📖 使用方法
 
