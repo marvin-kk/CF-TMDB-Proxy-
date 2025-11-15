@@ -27,11 +27,12 @@
    - 登录你的 Cloudflare 账户
 
 2. **创建新的 Worker**
+3. 如下图<img width="2808" height="628" alt="image" src="https://github.com/user-attachments/assets/dbac6a29-3c9e-45c2-adff-a94608b1af60" />
    - 点击 "Create a Service"
    - 输入服务名称（如：`tmdb-proxy`）
    - 选择 "HTTP handler" 模板
 
-3. **部署代码**
+4. **部署代码**
    - 将 `worker.js` 的内容复制到编辑器中
    - 点击 "Save and Deploy"
 
