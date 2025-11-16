@@ -12,7 +12,17 @@ export default {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-API-Key',
+      'Cross-Origin-Resource-Policy': 'cross-origin'
     };
+
+    function rewriteConfigImages(payload) {
+      if (!payload || typeof payload !== 'object' || !payload.images) return payload;
+      const origin = url.origin.replace(/\/$/, '');
+      const proxyBase = `${origin}/t/p/`;
+      payload.images.base_url = proxyBase;
+      payload.images.secure_base_url = proxyBase;
+      return payload;
+    }
 
     // 处理 OPTIONS 预检请求
     if (request.method === 'OPTIONS') {
@@ -157,13 +167,22 @@ export default {
           },
         });
 
-        const responseText = await response.text();
+        let responseText = await response.text();
 
         // 智能缓存控制
         const cacheTime = pathname.includes('configuration') ? 3600 : // 配置1小时
                          pathname.includes('search') ? 300 :           // 搜索5分钟
                          pathname.includes('popular') ? 1800 :         // 热门30分钟
                          600; // 默认10分钟
+
+        if (pathname.startsWith('/3/configuration')) {
+          try {
+            const json = JSON.parse(responseText);
+            responseText = JSON.stringify(rewriteConfigImages(json));
+          } catch (err) {
+            // 如果解析失败则保持原样
+          }
+        }
 
         return new Response(responseText, {
           status: response.status,
@@ -232,7 +251,7 @@ function getFake404HTML() {
         <div class="error-details">
             <strong>Error Details:</strong><br>
             • Request Method: GET<br>
-            • Request URL: ${new Date().toISOString().split('T')[0]}<br>
+            • Request URL: ${new Date()。toISOString()。split('T')[0]}<br>
             • Server: Cloudflare Workers<br>
             • Timestamp: ${new Date().toISOString()}
         </div>
